@@ -13,7 +13,7 @@ struct contactoEmail{
 
 void agregarContacto(contactoEmail Contacto[], int &cantidad){
 	
-	cout << "\nIngrese datos del nuevo contacto:\n" << endl;
+	cout << "\nIngrese datos del nuevo contacto " << cantidad + 1 << ": \n" << endl;
 	cout << "NOMBRE COMPLETO: ";
 	cin.ignore();
 	getline(cin, Contacto[cantidad].nombre);
@@ -37,6 +37,26 @@ void agregarContacto(contactoEmail Contacto[], int &cantidad){
     cantidad++;
 	
 }
+void eliminarContacto(contactoEmail guardarContacto[], int &cantidad){
+    int indice;
+
+    cout << "\nIngrese el numero del contacto que desea eliminar (1 a " << cantidad << "): ";
+    cin >> indice;
+
+    if (indice > 0 && indice <= cantidad) {
+        // Mover los contactos siguientes una posición hacia arriba
+        for (int i = indice - 1; i < cantidad - 1; i++) {
+            guardarContacto[i] = guardarContacto[i + 1];
+        }
+
+        cantidad--;
+
+        cout << "\nContacto eliminado\n";
+    } else {
+        cout << "\nNumero invalido, no se encontro el contacto\n";
+    }
+
+}
 
 void menu(){
 	char opcion;
@@ -44,9 +64,10 @@ void menu(){
 	contactoEmail guardarContacto[TAM];
 	int cantidadContactos = 0;
 	
-	cout << "            ---------------MENU PRINCIPAL---------------\n" << endl;
 	
 	do{
+		cout << "            ---------------MENU PRINCIPAL---------------\n" << endl;
+		
 		cout << "\n ---------------------------------------------------------------------\n";
 		cout << "  a) Agregar contacto" << endl;
 		cout << "  b) Eliminar un contacto" << endl;
@@ -57,15 +78,17 @@ void menu(){
 		cout << "  e) Salir del programa" << endl;
 		cout << " ---------------------------------------------------------------------\n";
 
-		cout << "\n  Eliga una opcion: ";
+		cout << "\n  Elija una opcion: ";
 		cin >> opcion;
 	
 		switch (opcion){
 			case 'a':
 				agregarContacto(guardarContacto, cantidadContactos);
 				break;
+				
 			case 'b':
-				//eliminarContacto();
+				eliminarContacto(guardarContacto, cantidadContactos);
+				system("pause");
 				break;
 			case 'c':
 				//MostrarlistaGeneral();
@@ -82,12 +105,14 @@ void menu(){
 			default:
 				cout << "\n  INVALIDO, porfavor ingrese una opcion valida\n" << endl;
 				break;
-		}		
+		}	
+		system("cls");	
 	}while (opcion != 'e');
 
 }
 
 int main(){
+	
 	menu();
 	
 	return 0;
