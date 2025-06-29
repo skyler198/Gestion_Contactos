@@ -2,7 +2,7 @@
 #include<string>
 using namespace std;
 
-struct contactoEmai{
+struct contactoEmail{
 	string nombre;
 	char sexo;
 	int edad;
@@ -11,8 +11,38 @@ struct contactoEmai{
 	string nacionalidad;
 };
 
+void agregarContacto(contactoEmail Contacto[], int &cantidad){
+	
+	cout << "\nIngrese datos del nuevo contacto:\n" << endl;
+	cout << "NOMBRE COMPLETO: ";
+	cin.ignore();
+	getline(cin, Contacto[cantidad].nombre);
+	
+	cout << "Sexo (M/F): ";
+	cin >> Contacto[cantidad].sexo;
+	
+	cout << "Edad: ";
+	cin >> Contacto[cantidad].edad;
+	
+	cout << "Telefono: ";
+    cin >> Contacto[cantidad].telefono;
+
+    cout << "Email: ";
+    cin >> Contacto[cantidad].email;
+
+    cout << "Nacionalidad: ";
+    cin.ignore(); // limpiar buffer otra vez
+    getline(cin, Contacto[cantidad].nacionalidad);
+    
+    cantidad++;
+	
+}
+
 void menu(){
 	char opcion;
+	const int TAM = 100;
+	contactoEmail guardarContacto[TAM];
+	int cantidadContactos = 0;
 	
 	cout << "            ---------------MENU PRINCIPAL---------------\n" << endl;
 	
@@ -32,7 +62,7 @@ void menu(){
 	
 		switch (opcion){
 			case 'a':
-				//agregarcontacto();
+				agregarContacto(guardarContacto, cantidadContactos);
 				break;
 			case 'b':
 				//eliminarContacto();
