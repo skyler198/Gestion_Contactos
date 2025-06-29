@@ -14,7 +14,7 @@ struct contactoEmail{
 void agregarContacto(contactoEmail Contacto[], int &cantidad){
 	
 	cout << "\nIngrese datos del nuevo contacto " << cantidad + 1 << ": \n" << endl;
-	cout << "NOMBRE COMPLETO: ";
+	cout << "Nombre completo: ";
 	cin.ignore();
 	getline(cin, Contacto[cantidad].nombre);
 	
@@ -79,6 +79,64 @@ void MostrarlistaGeneral(contactoEmail contactos[], int cantidad){
     }
 }
 
+string obtenerDominio(string email) {
+    string dominio = "";
+    bool arroba = false;
+    int i = 0;
+
+    while (email[i] != '\0') {
+        if (arroba) {
+            dominio += email[i];
+        }
+        if (email[i] == '@') {
+            arroba = true;
+        }
+        i++;
+    }
+
+    return dominio;
+}
+
+void ordenarPorDominio(contactoEmail contactos[], int cantidad) {
+    for (int i = 0; i < cantidad - 1; i++) {
+        for (int j = 0; j < cantidad - 1 - i; j++) {
+            string dominio1 = obtenerDominio(contactos[j].email);
+            string dominio2 = obtenerDominio(contactos[j + 1].email);
+
+            if (dominio1 > dominio2) {
+                contactoEmail temp = contactos[j];
+                contactos[j] = contactos[j + 1];
+                contactos[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void MostrarListaOrdenadaPorServidor(contactoEmail contactos[], int cantidad){
+    string dominioActual;
+    if (cantidad == 0) {
+        cout << "\nNo hay contactos registrados\n";
+        return;
+    }
+
+    ordenarPorDominio(contactos, cantidad);
+
+    cout << "\nContactos ordenados por servidor de correo:\n";
+
+    dominioActual = "";
+
+    for (int i = 0; i < cantidad; i++) {
+        string dominio = obtenerDominio(contactos[i].email);
+
+        if (dominio != dominioActual) {
+            dominioActual = dominio;
+            cout << "\n--- " << dominioActual << " ---\n";
+        }
+
+        cout << "- " << contactos[i].nombre << " (" << contactos[i].email << ")\n";
+    }
+}
+
 
 void menu(){
 	char opcion;
@@ -118,11 +176,12 @@ void menu(){
 				system("pause");
 				break;
 			case 'd':
-				//MostrarListaOrdenadaPorServidor();
+				MostrarListaOrdenadaPorServidor(guardarContacto, cantidadContactos);
+				system("pause");
 				break;
 			case 'e':
 				cout << "\n -----------------------------------------";
-				cout << "\n  GRACIAS POR USAR MI PROMGRAMA <3!" << endl;
+				cout << "\n  GRACIAS POR USAR MI PROGRAMA <3!" << endl;
 				cout << "\n  Saliendo del programa ..." << endl;
 				cout << "  PROGRAMA FINALIZADO!" << endl;
 				system("pause");
