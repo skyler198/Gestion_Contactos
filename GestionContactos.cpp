@@ -37,6 +37,7 @@ void agregarContacto(contactoEmail Contacto[], int &cantidad){
     cantidad++;
 	
 }
+
 void eliminarContacto(contactoEmail guardarContacto[], int &cantidad){
     int indice;
 
@@ -57,6 +58,27 @@ void eliminarContacto(contactoEmail guardarContacto[], int &cantidad){
     }
 
 }
+
+void MostrarlistaGeneral(contactoEmail contactos[], int cantidad){
+	
+	cout << "\nLISTA DE CONTACTOS REGISTRADOS:\n";
+	if (cantidad != 0){
+
+	    for (int i = 0; i < cantidad; i++) {
+	    	
+	        cout << "\nContacto #" << (i + 1) << ":\n";
+	        cout << "  Nombre: " << contactos[i].nombre << endl;
+	        cout << "  Sexo: " << contactos[i].sexo << endl;
+	        cout << "  Edad: " << contactos[i].edad << endl;
+	        cout << "  Telefono: " << contactos[i].telefono << endl;
+	        cout << "  Email: " << contactos[i].email << endl;
+	        cout << "  Nacionalidad: " << contactos[i].nacionalidad << endl;
+	    }
+	}else {
+        cout << "\nNo se agrego ningun contacto todavia..." << endl;
+    }
+}
+
 
 void menu(){
 	char opcion;
@@ -84,6 +106,7 @@ void menu(){
 		switch (opcion){
 			case 'a':
 				agregarContacto(guardarContacto, cantidadContactos);
+				system("pause");
 				break;
 				
 			case 'b':
@@ -91,7 +114,8 @@ void menu(){
 				system("pause");
 				break;
 			case 'c':
-				//MostrarlistaGeneral();
+				MostrarlistaGeneral(guardarContacto, cantidadContactos);
+				system("pause");
 				break;
 			case 'd':
 				//MostrarListaOrdenadaPorServidor();
@@ -101,9 +125,11 @@ void menu(){
 				cout << "\n  GRACIAS POR USAR MI PROMGRAMA <3!" << endl;
 				cout << "\n  Saliendo del programa ..." << endl;
 				cout << "  PROGRAMA FINALIZADO!" << endl;
+				system("pause");
 				break;
 			default:
 				cout << "\n  INVALIDO, porfavor ingrese una opcion valida\n" << endl;
+				system("pause");
 				break;
 		}	
 		system("cls");	
